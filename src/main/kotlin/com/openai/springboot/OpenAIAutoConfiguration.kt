@@ -20,10 +20,6 @@ class OpenAIAutoConfiguration {
         properties: OpenAIProperties,
         customizers: ObjectProvider<OpenAICustomizer>
     ): OpenAIClient {
-        if (properties.apiKey.isBlank()) {
-            throw IllegalArgumentException("OpenAI API key cannot be blank. Please set openai.api-key property.")
-        }
-        
         return OpenAIOkHttpClient.builder().apply {
             properties.baseUrl?.let(::baseUrl)
             apiKey(properties.apiKey)
