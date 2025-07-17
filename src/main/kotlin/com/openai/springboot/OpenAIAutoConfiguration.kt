@@ -19,14 +19,12 @@ class OpenAIAutoConfiguration {
     internal fun client(
         properties: OpenAIProperties,
         customizers: ObjectProvider<OpenAICustomizer>
-    ): OpenAIClient {
-        return OpenAIOkHttpClient.builder().apply {
-            properties.baseUrl?.let(::baseUrl)
-            apiKey(properties.apiKey)
-            properties.organization?.let(::organization)
-            properties.project?.let(::project)
-            properties.webhookSecret?.let(::webhookSecret)
-            customizers.orderedStream().forEach { it.customize(this) }
-        }.build()
-    }
+    ): OpenAIClient = OpenAIOkHttpClient.builder().apply {
+        properties.baseUrl?.let(::baseUrl)
+        properties.apiKey.let(::apiKey)
+        properties.organization?.let(::organization)
+        properties.project?.let(::project)
+        properties.webhookSecret?.let(::webhookSecret)
+        customizers.orderedStream().forEach { it.customize(this) }
+    }.build()
 }
