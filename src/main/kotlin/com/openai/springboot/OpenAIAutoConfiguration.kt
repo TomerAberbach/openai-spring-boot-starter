@@ -19,12 +19,18 @@ class OpenAIAutoConfiguration {
     internal fun client(
         properties: OpenAIProperties,
         customizers: ObjectProvider<OpenAICustomizer>
-    ): OpenAIClient = OpenAIOkHttpClient.builder().apply {
-        properties.baseUrl?.let(::baseUrl)
-        properties.apiKey?.let(::apiKey)
-        properties.organization?.let(::organization)
-        properties.project?.let(::project)
-        properties.webhookSecret?.let(::webhookSecret)
-        customizers.orderedStream().forEach { it.customize(this) }
-    }.build()
+    ): OpenAIClient {
+        if (properties.apiKey.isBlank()) {
+            throw IllegalArgumentException("OpenAI API key cannot be blank. Please set openai.api-key property.")
+        }
+        
+        return OpenAIOkHttpClient.builder().apply {
+            properties.baseUrl?.let(::baseUrl)
+            apiKey(properties.apiKey)
+            properties.organization?.let(::organization)
+            properties.project?.let(::project)
+            properties.webhookSecret?.let(::webhookSecret)
+            customizers.orderedStream().forEach { it.customize(this) }
+        }.build()
+    }
 }
