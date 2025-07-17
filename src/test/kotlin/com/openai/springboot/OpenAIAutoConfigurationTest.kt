@@ -73,8 +73,9 @@ internal class OpenAIAutoConfigurationTest {
                 )
                 .run { it.getBean<OpenAIClient>() }
         }
-        assertTrue(exception.message?.contains("Could not bind properties") == true ||
-                   exception.message?.contains("OpenAIProperties") == true ||
-                   exception.message?.contains("UnsatisfiedDependencyException") == true)
+
+        assertTrue(
+            exception.stackTraceToString().contains("OpenAI API key is required. Please set openai.api-key property.")
+        )
     }
 }
