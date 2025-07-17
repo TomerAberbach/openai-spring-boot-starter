@@ -22,6 +22,7 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-autoconfigure")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("com.openai:openai-java:2.14.0")
     
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
