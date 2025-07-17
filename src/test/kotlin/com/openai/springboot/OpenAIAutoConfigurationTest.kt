@@ -68,8 +68,7 @@ internal class OpenAIAutoConfigurationTest {
         val exception = assertThrows<Exception> {
             contextRunner
                 .withPropertyValues(
-                    "openai.api-key=   ",
-                    "openai.organization=test-org"
+                    "openai.api-key=   "
                 )
                 .run { it.getBean<OpenAIClient>() }
         }
