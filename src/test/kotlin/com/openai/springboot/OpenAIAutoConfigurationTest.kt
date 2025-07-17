@@ -53,7 +53,7 @@ internal class OpenAIAutoConfigurationTest {
 
     @Test
     fun clientWithoutRequiredFields() {
-        assertThrows<IllegalStateException> {
+        val exception = assertThrows<Exception> {
             contextRunner
                 .withPropertyValues(
                     "openai.organization=test-org",
@@ -63,6 +63,8 @@ internal class OpenAIAutoConfigurationTest {
                 )
                 .run { it.getBean<OpenAIClient>() }
         }
+        assertTrue(exception.message?.contains("Could not bind properties") == true ||
+                   exception.message?.contains("OpenAIProperties") == true)
     }
 
     @Test
@@ -75,5 +77,18 @@ internal class OpenAIAutoConfigurationTest {
                 it.getBean<OpenAIClient>()
                 assertTrue(customized)
             }
+    }
+
+    @Test
+    fun clientWithBlankApiKey() {
+        val exception = assertThrows<Exception> {
+            contextRunner
+                .withPropertyValues(
+                    "openai.api-key=   ",
+                    "openai.organization=test-org"
+                )
+                .run { it.getBean<OpenAIClient>() }
+        }
+        assertTrue(exception.message == "OpenAI API key is required. Please set openai.api-key property.")
     }
 }
