@@ -1,0 +1,30 @@
+{
+  "properties": [
+    {
+      "name": "openai.api-key",
+      "type": "java.lang.String",
+      "description": "OpenAI API key for authentication."
+    },
+    {
+      "name": "openai.organization",
+      "type": "java.lang.String",
+      "description": "OpenAI organization ID (optional)."
+    },
+    {
+      "name": "openai.project",
+      "type": "java.lang.String",
+      "description": "OpenAI project ID (optional)."
+    },
+    {
+      "name": "openai.webhook-secret",
+      "type": "java.lang.String",
+      "description": "OpenAI webhook secret for webhook validation (optional)."
+    },
+    {
+      "name": "openai.base-url",
+      "type": "java.lang.String",
+      "description": "Base URL for OpenAI API.",
+      "defaultValue": "https://api.openai.com/v1"
+    }
+  ]
+}
